@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Library - Ultimate Edition</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <style>
+        /* 🌟 CSS Variables */
+        :root {
+            /* Default Light White */
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-header: rgba(255, 255, 255, 0.9);
+            --border-color: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #3b82f6; 
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --shadow-soft: 0 8px 20px rgba(0, 0, 0, 0.05);
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            --canvas-filter: none;
+        }
+
+        /* 🌙 Theme: OLED Dark */
+        [data-theme="dark"] {
+            --bg-main: #000000;
+            --bg-card: #111111;
+            --bg-header: rgba(10, 10, 10, 0.85);
+            --border-color: #222222;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #60a5fa;
+            --shadow-soft: 0 4px 20px rgba(255,255,255,0.02);
+        }
+
+        /* 🎨 Theme: Paper Cut */
+        [data-theme="papercut"] {
+            --bg-main: #f4f0ec;
+            --bg-card: #ffffff;
+            --bg-header: rgba(255, 255, 255, 0.9);
+            --border-color: #d7d3c8;
+            --text-main: #2c2a25;
+            --text-muted: #797569;
+            --accent: #d97757;
+            --accent-glow: rgba(217, 119, 87, 0.15);
+            --shadow-soft: 4px 4px 0px rgba(0,0,0,0.06); 
+        }
+
+        /* 📱 Theme: iPhone iOS */
+        [data-theme="iphone"] {
+            --bg-main: #f2f2f7;
+            --bg-card: #ffffff;
+            --bg-header: rgba(255, 255, 255, 0.8);
+            --border-color: transparent;
+            --text-main: #000000;
+            --text-muted: #8e8e93;
+            --accent: #007aff;
+            --accent-glow: rgba(0, 122, 255, 0.15);
+            --shadow-soft: 0 2px 12px rgba(0,0,0,0.04);
+        }
+
+        /* 🔤 Font Styles */
+        [data-font="default"] { --font-family: 'Plus Jakarta Sans', sans-serif; }
+        [data-font="serif"] { --font-family: 'Merriweather', serif; }
+        [data-font="mono"] { --font-family: 'Courier New', Courier, monospace; }
+        
+        /* 📖 Sepia Reader Mode (Eye Care) */
+        .sepia-mode { --canvas-filter: sepia(0.5) contrast(0.9) brightness(0.9) !important; }
+        [data-theme="dark"] .dark-reader-mode { --canvas-filter: invert(1) hue-rotate(180deg) contrast(0.9) brightness(0.8) !important; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-family); transition: background 0.3s, border-color 0.3s; }
+        body { background: var(--bg-main); color: var(--text-main); overflow-x: hidden; min-height: 100vh; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        /* --- Glass Header --- */
+        .header-container { 
+            max-width: 1050px; margin: 20px auto; padding: 12px 20px; 
+            display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-header); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px; border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-soft); position: sticky; top: 15px; z-index: 50;
+        }
+        .header-title { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 800; }
+        .header-title i { color: var(--accent); font-size: 26px; }
+        
+        /* Tabs */
+        .tabs { display: flex; gap: 10px; background: var(--bg-main); padding: 4px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .tab-btn { padding: 6px 14px; border: none; background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .tab-btn.active { background: var(--bg-card); color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+
+        .search-box { position: relative; width: 200px; }
+        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px; }
+        .search-box input {
+            width: 100%; background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main);
+            padding: 8px 12px 8px 36px; border-radius: 10px; outline: none; font-size: 13px; font-weight: 500;
+        }
+        .search-box input:focus { border-color: var(--accent); }
+
+        .global-settings-btn {
+            background: var(--bg-main); border: 1px solid var(--border-color); width: 36px; height: 36px;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--text-main); cursor: pointer;
+        }
+
+        /* Dropdown Settings & History */
+        .dropdown {
+            display: none; position: absolute; right: 0; top: calc(100% + 8px); background: var(--bg-card);
+            backdrop-filter: blur(10px); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
+            padding: 10px; z-index: 100; min-width: 240px; border: 1px solid var(--border-color); 
+        }
+        .dropdown-header { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin: 4px 6px; border-bottom: 1px dashed var(--border-color); padding-bottom: 4px; display: flex; align-items: center; gap: 6px;}
+        .dropdown-item { padding: 8px; font-size: 13px; color: var(--text-main); border-radius: 8px; transition: 0.15s; display: flex; flex-direction: column; gap: 4px; }
+        .dropdown-item:hover { background: var(--bg-main); cursor: pointer; }
+        select.settings-select { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); outline: none; cursor: pointer; margin-top: 4px;}
+
+        /* --- Ultimate Library Grid --- */
+        .library-grid { max-width: 1050px; margin: 30px auto 60px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px;
+            padding: 12px; position: relative; cursor: pointer; box-shadow: var(--shadow-soft);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 12px 24px var(--accent-glow); }
+
+        /* Auto PDF Cover Canvas */
+        .card-cover { 
+            width: 100%; aspect-ratio: 2/3; background: var(--bg-main); border-radius: 10px; overflow: hidden; 
+            display: flex; align-items: center; justify-content: center; position: relative; border: 1px solid var(--border-color);
+        }
+        .card-cover canvas { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; }
+        .card-cover canvas.loaded { opacity: 1; }
+        .loading-shimmer { position: absolute; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        /* 🎃 Pumpkin Favorite Button */
+        .fav-btn {
+            position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; cursor: pointer; transition: 0.3s; z-index: 10; border: 1px solid rgba(255,255,255,0.2);
+            filter: grayscale(100%); opacity: 0.7;
+        }
+        .fav-btn:hover { opacity: 1; transform: scale(1.1); }
+        .fav-btn.active { filter: grayscale(0%); opacity: 1; background: rgba(255, 120, 0, 0.2); border-color: #ff7800; transform: scale(1.1); animation: pop 0.3s ease; }
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1.1); } }
+
+        /* Book Details & Progress */
+        .card-info { padding: 4px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-title { font-size: 14px; font-weight: 700; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; margin-bottom: 8px; }
+        
+        .progress-wrapper { margin-top: auto; }
+        .progress-text { font-size: 10px; color: var(--text-muted); font-weight: 600; display: flex; justify-content: space-between; margin-bottom: 4px; }
+        .progress-bar { width: 100%; height: 6px; background: var(--bg-main); border-radius: 4px; overflow: hidden; border: 1px solid var(--border-color); }
+        .progress-fill { height: 100%; background: var(--accent); border-radius: 4px; width: 0%; transition: width 0.5s ease; }
+
+        /* --- Ultimate PDF Viewer Overlay --- */
+        #viewer-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-main); z-index: 1000; flex-direction: column;
+        }
+
+        .viewer-header {
+            background: var(--bg-card); height: 60px; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-shadow: var(--shadow-soft);
+        }
+
+        .btn-action {
+            background: var(--bg-main); color: var(--text-main); border: 1px solid var(--border-color); 
+            padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; 
+            display: flex; align-items: center; gap: 6px; transition: 0.2s;
+        }
+        .btn-action:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        .btn-close { background: rgba(225, 29, 72, 0.1); color: #e11d48; border-color: transparent; }
+        .btn-close:hover { background: #e11d48; color: white; }
+
+        .pdf-controls { display: flex; align-items: center; gap: 8px; background: var(--bg-main); padding: 6px 12px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .btn-control { background: transparent; border: none; color: var(--text-main); width: 30px; height: 30px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: 0.2s; }
+        .btn-control:hover { background: var(--bg-card); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .page-info { font-size: 12px; font-weight: 700; min-width: 70px; text-align: center; }
+
+        .canvas-container { flex-grow: 1; overflow: auto; padding: 30px; text-align: center; background: var(--bg-main); }
+        #pdf-render { 
+            background: white; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-radius: 4px; display: inline-block; 
+            margin: 0 auto; filter: var(--canvas-filter); transition: filter 0.3s;
+        }
+
+        .msg-text { text-align: center; margin-top: 80px; font-size: 16px; font-weight: 600; grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-muted); }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        @media (max-width: 900px) { .library-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 650px) { .library-grid { grid-template-columns: repeat(2, 1fr); } .header-container { flex-wrap: wrap; gap: 15px; } .tabs { width: 100%; justify-content: center; order: 3; } }
+        @media (max-width: 450px) { .library-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body data-theme="default" data-font="default">
+
+    <!-- Header & Controls -->
+    <div class="header-container">
+        <div class="header-title"><i class="ph-duotone ph-books"></i> Library</div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('all', this)">All Books</button>
+            <button class="tab-btn" onclick="switchTab('fav', this)">Favorites 🎃</button>
+        </div>
+        
+        <div style="display:flex; gap: 10px; position:relative;">
+            <div class="search-box">
+                <i class="ph ph-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterPDFs()">
+            </div>
+            
+            <button class="global-settings-btn" onclick="toggleSettings(event)">
+                <i class="ph-bold ph-gear"></i>
+            </button>
+            
+            <!-- Global Dropdown Menu (History + Settings) -->
+            <div class="dropdown" id="settings-menu">
+                
+                <!-- History Section -->
+                <div class="dropdown-header"><i class="ph-bold ph-clock-counter-clockwise"></i> Recently Read</div>
+                <div id="recent-book-container">
+                    <!-- JS will populate this -->
+                </div>
+                
+                <!-- Theme/Font Settings -->
+                <div class="dropdown-header" style="margin-top: 15px;"><i class="ph-bold ph-palette"></i> Appearance</div>
+                <div class="dropdown-item" onclick="event.stopPropagation()">
+                    <label style="font-size:11px; font-weight:600; color:var(--text-muted);">THEME</label>
+                    <select class="settings-select" id="theme-select" onchange="changeTheme(this.value)">
+                        <option value="default">Light White (Default)</option>
+                        <option value="dark">OLED Dark (Night)</option>
+                        <option value="papercut">Paper Cut (Minimal)</option>
+                        <option value="iphone">iPhone iOS (Clean)</option>
+                    </select>
+                </div>
+                <div class="dropdown-item" onclick="event.stopPropagation()">
+                    <label style="font-size:11px; font-weight:600; color:var(--text-muted);">FONT</label>
+                    <select class="settings-select" id="font-select" onchange="changeFont(this.value)">
+                        <option value="default">Jakarta (Modern)</option>
+                        <option value="serif">Merriweather (Classic)</option>
+                        <option value="mono">Courier (Typewriter)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Grid -->
+    <div class="library-grid" id="library-grid">
+        <div class="msg-text">
+            <i class="ph-duotone ph-spinner-gap" style="font-size: 32px; animation: spin 1s linear infinite; color: var(--accent);"></i>
+            Arranging your bookshelf...
+        </div>
+    </div>
+
+    <!-- PDF Viewer -->
+    <div id="viewer-overlay">
+        <div class="viewer-header">
+            <button class="btn-action btn-close" onclick="closeViewer()"><i class="ph-bold ph-x"></i> Library</button>
+            
+            <div class="pdf-controls">
+                <button class="btn-control" id="zoom-out"><i class="ph-bold ph-minus"></i></button>
+                <button class="btn-control" id="zoom-in"><i class="ph-bold ph-plus"></i></button>
+                <div style="width: 1px; height: 16px; background: var(--border-color); margin: 0 4px;"></div>
+                <button class="btn-control" id="prev-page"><i class="ph-bold ph-caret-left"></i></button>
+                <span class="page-info"><span id="page-num">0</span> / <span id="page-count">0</span></span>
+                <button class="btn-control" id="next-page"><i class="ph-bold ph-caret-right"></i></button>
+            </div>
+            
+            <div style="display:flex; gap:10px;">
+                <button class="btn-action" onclick="toggleEyeCare()" title="Toggle Sepia Eye Care Mode">
+                    <i class="ph-bold ph-eye"></i> <span class="hide-mobile">Eye Care</span>
+                </button>
+                <button class="btn-action" onclick="downloadCurrentPDF()" style="background: var(--accent); color: white; border:none;">
+                    <i class="ph-bold ph-download-simple"></i> <span class="hide-mobile">Save</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="canvas-container" id="canvas-container">
+            <canvas id="pdf-render"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🤖 AUTOMATIC GITHUB INFO DETECTION 
+        // ==========================================
+        let GITHUB_USERNAME = ''; 
+        let GITHUB_REPO = '';    
+        const FOLDER_NAME = 'pdf'; 
+
+        if (window.location.hostname.includes('github.io')) {
+            GITHUB_USERNAME = window.location.hostname.split('.')[0]; 
+            const pathParts = window.location.pathname.split('/').filter(part => part.length > 0);
+            if (pathParts.length > 0) GITHUB_REPO = pathParts[0]; 
+            else GITHUB_REPO = window.location.hostname; 
+        }
+        // ==========================================
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        let pdfDoc = null, pageNum = 1, pageIsRendering = false, pageNumIsPending = null, scale = 1.3;
+        const canvas = document.getElementById('pdf-render');
+        const ctx = canvas.getContext('2d');
+        
+        let allPdfs = [];
+        let currentFileName = ""; 
+        let currentTab = 'all';
+
+        // 🟢 1. Local Storage Management (Themes, Fonts, History & Favorites)
+        let favorites = JSON.parse(localStorage.getItem('library-favs')) || [];
+
+        function loadPreferences() {
+            const savedTheme = localStorage.getItem('app-theme') || 'default';
+            const savedFont = localStorage.getItem('app-font') || 'default';
+            document.body.setAttribute('data-theme', savedTheme);
+            document.body.setAttribute('data-font', savedFont);
+            document.getElementById('theme-select').value = savedTheme;
+            document.getElementById('font-select').value = savedFont;
+            
+            updateGlobalHistory();
+        }
+
+        function changeTheme(theme) { document.body.setAttribute('data-theme', theme); localStorage.setItem('app-theme', theme); }
+        function changeFont(font) { document.body.setAttribute('data-font', font); localStorage.setItem('app-font', font); }
+        
+        function updateGlobalHistory() {
+            const recentBook = localStorage.getItem('recent-book');
+            const container = document.getElementById('recent-book-container');
+            
+            if (recentBook) {
+                const page = localStorage.getItem(`page-${recentBook}`) || 1;
+                const displayName = recentBook.replace(/\.pdf$/i, '');
+                container.innerHTML = `
+                    <div class="dropdown-item" onclick="openPdf('${recentBook}')">
+                        <strong style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${displayName}</strong>
+                        <span style="font-size:11px; color:var(--accent); font-weight:600; margin-top:2px;">
+                            <i class="ph-bold ph-bookmark-simple"></i> Jump back to Page ${page}
+                        </span>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `<div class="dropdown-item" style="font-size:12px; color:var(--text-muted); cursor:default;">No books read yet.</div>`;
+            }
+        }
+
+        function toggleSettings(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('settings-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+        window.onclick = () => { document.getElementById('settings-menu').style.display = 'none'; };
+
+        function toggleEyeCare() {
+            document.body.classList.toggle('sepia-mode');
+            const theme = document.body.getAttribute('data-theme');
+            if(theme === 'dark') document.body.classList.toggle('dark-reader-mode');
+        }
+
+        // 🟢 2. Fetch Books from GitHub
+        async function loadLibrary() {
+            if (!GITHUB_USERNAME) {
+                document.getElementById('library-grid').innerHTML = `<div class="msg-text"><i class="ph-fill ph-info" style="font-size:32px;"></i> Upload to GitHub Pages to auto-load books.</div>`;
+                return;
+            }
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${FOLDER_NAME}`);
+                if (!response.ok) throw new Error('API Error');
+                const data = await response.json();
+                allPdfs = data.filter(file => file.name.toLowerCase().endsWith('.pdf'));
+                renderGrid();
+            } catch (error) {
+                document.getElementById('library-grid').innerHTML = `<div class="msg-text"><i class="ph-fill ph-warning-circle" style="font-size:32px;"></i> No 'pdf' folder found or Repo is private.</div>`;
+            }
+        }
+
+        // 🟢 3. Render Books Grid
+        function renderGrid(searchQuery = '') {
+            const grid = document.getElementById('library-grid');
+            grid.innerHTML = ''; 
+
+            let displayList = allPdfs.filter(file => file.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            if (currentTab === 'fav') displayList = displayList.filter(file => favorites.includes(file.name));
+
+            if(displayList.length === 0) {
+                grid.innerHTML = '<div class="msg-text"><i class="ph-duotone ph-books" style="font-size:36px;"></i> No books found here.</div>';
+                return;
+            }
+
+            displayList.forEach((file, index) => {
+                const displayName = file.name.replace(/\.pdf$/i, '');
+                const isFav = favorites.includes(file.name) ? 'active' : '';
+                
+                // Progress Calculation
+                const savedPage = parseInt(localStorage.getItem(`page-${file.name}`)) || 0;
+                const totalPages = parseInt(localStorage.getItem(`total-${file.name}`)) || 0;
+                let percent = 0;
+                let statusText = "New";
+                if(totalPages > 0 && savedPage > 0) {
+                    percent = Math.round((savedPage / totalPages) * 100);
+                    statusText = percent === 100 ? "Finished" : `${percent}% Read`;
+                } else if (savedPage > 0) {
+                    statusText = `Page ${savedPage}`;
+                }
+
+                const fileUrl = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/${FOLDER_NAME}/${encodeURIComponent(file.name)}`;
+                const canvasId = `cover-${index}`;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="fav-btn ${isFav}" onclick="toggleFav(event, '${file.name}')" title="Favorite">🎃</div>
+                    
+                    <div class="card-cover" onclick="openPdf('${file.name}')">
+                        <div class="loading-shimmer"></div>
+                        <canvas id="${canvasId}"></canvas>
+                    </div>
+                    
+                    <div class="card-info" onclick="openPdf('${file.name}')">
+                        <div class="card-title" title="${displayName}">${displayName}</div>
+                        <div class="progress-wrapper">
+                            <div class="progress-text"><span>Progress</span> <span>${statusText}</span></div>
+                            <div class="progress-bar"><div class="progress-fill" style="width: ${percent}%;"></div></div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                
+                // Lazy Load the Cover Image
+                observer.observe(card);
+                card.dataset.url = fileUrl;
+                card.dataset.cid = canvasId;
+            });
+        }
+
+        // 🎃 Toggle Favorite
+        function toggleFav(event, fileName) {
+            event.stopPropagation();
+            if (favorites.includes(fileName)) favorites = favorites.filter(f => f !== fileName);
+            else favorites.push(fileName);
+            
+            localStorage.setItem('library-favs', JSON.stringify(favorites));
+            
+            if(currentTab === 'fav') renderGrid(document.getElementById('searchInput').value);
+            else {
+                const btn = event.currentTarget;
+                btn.classList.toggle('active');
+            }
+        }
+
+        // Switch Tabs (All / Fav)
+        function switchTab(tab, element) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+            renderGrid(document.getElementById('searchInput').value);
+        }
+
+        function filterPDFs() { renderGrid(document.getElementById('searchInput').value); }
+
+        // 🟢 4. Lazy Loading Cover Generator (Super Performance)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = entry.target;
+                    generateCover(card.dataset.url, card.dataset.cid);
+                    observer.unobserve(card);
+                }
+            });
+        }, { rootMargin: "100px" });
+
+        async function generateCover(url, canvasId) {
+            try {
+                const pdf = await pdfjsLib.getDocument(url).promise;
+                const page = await pdf.getPage(1);
+                const canvas = document.getElementById(canvasId);
+                if(!canvas) return;
+                
+                const viewport = page.getViewport({ scale: 0.5 });
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                
+                const ctx = canvas.getContext('2d');
+                await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                canvas.classList.add('loaded');
+            } catch(e) { console.log("Cover load failed for", url); }
+        }
+
+        // 🟢 5. PDF Viewer & Progress Tracker
+        function openPdf(fileName) {
+            currentFileName = fileName;
+            
+            // Set History
+            localStorage.setItem('recent-book', fileName);
+            updateGlobalHistory();
+            
+            document.getElementById('viewer-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            const savedPage = localStorage.getItem(`page-${fileName}`);
+            pageNum = savedPage ? parseInt(savedPage) : 1;
+            const fileUrl = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/${FOLDER_NAME}/${encodeURIComponent(fileName)}`;
+            
+            pdfjsLib.getDocument(fileUrl).promise.then(pdfDoc_ => {
+                pdfDoc = pdfDoc_;
+                document.getElementById('page-count').textContent = pdfDoc.numPages;
+                localStorage.setItem(`total-${fileName}`, pdfDoc.numPages); // Save total pages
+                renderPage(pageNum);
+            }).catch(err => { alert("Error loading Book. Please check connection."); closeViewer(); });
+        }
+
+        function closeViewer() {
+            document.getElementById('viewer-overlay').style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+            pdfDoc = null; 
+            renderGrid(document.getElementById('searchInput').value); // Re-render to update progress bar instantly
+        }
+
+        function renderPage(num) {
+            pageIsRendering = true;
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                const renderCtx = { canvasContext: ctx, viewport: viewport };
+                
+                page.render(renderCtx).promise.then(() => {
+                    pageIsRendering = false;
+                    if (pageNumIsPending !== null) { renderPage(pageNumIsPending); pageNumIsPending = null; }
+                });
+
+                document.getElementById('page-num').textContent = num;
+                localStorage.setItem(`page-${currentFileName}`, num); 
+                document.getElementById('canvas-container').scrollTop = 0; 
+                
+                // Real-time history update while reading
+                updateGlobalHistory(); 
+            });
+        }
+
+        function queueRenderPage(num) { if (pageIsRendering) pageNumIsPending = num; else renderPage(num); }
+
+        document.getElementById('prev-page').addEventListener('click', () => { if (pageNum <= 1) return; pageNum--; queueRenderPage(pageNum); });
+        document.getElementById('next-page').addEventListener('click', () => { if (pageNum >= pdfDoc.numPages) return; pageNum++; queueRenderPage(pageNum); });
+        document.getElementById('zoom-in').addEventListener('click', () => { scale += 0.2; queueRenderPage(pageNum); });
+        document.getElementById('zoom-out').addEventListener('click', () => { if (scale <= 0.6) return; scale -= 0.2; queueRenderPage(pageNum); });
+
+        // Offline Download Action
+        function downloadCurrentPDF() {
+            if(!currentFileName) return;
+            const fileUrl = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/${FOLDER_NAME}/${encodeURIComponent(currentFileName)}`;
+            window.open(fileUrl, '_blank');
+        }
+
+        // Start
+        loadPreferences();
+        loadLibrary();
+    </script>
+</body>
+</html>
