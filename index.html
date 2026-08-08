@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Library - Masterpiece Edition</title>
+    <title>Premium Library - Ultimate Edition</title>
     
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
@@ -29,40 +29,11 @@
         }
 
         /* 🌙 OLED Dark */
-        [data-theme="dark"] {
-            --bg-main: #000000;
-            --bg-card: #111111;
-            --bg-header: rgba(10, 10, 10, 0.85);
-            --border-color: #222222;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #60a5fa;
-            --shadow-soft: 0 4px 20px rgba(255,255,255,0.02);
-        }
-
+        [data-theme="dark"] { --bg-main: #000000; --bg-card: #111111; --bg-header: rgba(10, 10, 10, 0.85); --border-color: #222222; --text-main: #f8fafc; --text-muted: #94a3b8; --accent: #60a5fa; --shadow-soft: 0 4px 20px rgba(255,255,255,0.02); }
         /* 🎨 Paper Cut */
-        [data-theme="papercut"] {
-            --bg-main: #f4f0ec;
-            --bg-card: #ffffff;
-            --bg-header: rgba(255, 255, 255, 0.9);
-            --border-color: #d7d3c8;
-            --text-main: #2c2a25;
-            --text-muted: #797569;
-            --accent: #d97757;
-            --shadow-soft: 4px 4px 0px rgba(0,0,0,0.06); 
-        }
-
+        [data-theme="papercut"] { --bg-main: #f4f0ec; --bg-card: #ffffff; --bg-header: rgba(255, 255, 255, 0.9); --border-color: #d7d3c8; --text-main: #2c2a25; --text-muted: #797569; --accent: #d97757; --shadow-soft: 4px 4px 0px rgba(0,0,0,0.06); }
         /* 📱 iPhone iOS */
-        [data-theme="iphone"] {
-            --bg-main: #f2f2f7;
-            --bg-card: #ffffff;
-            --bg-header: rgba(255, 255, 255, 0.8);
-            --border-color: transparent;
-            --text-main: #000000;
-            --text-muted: #8e8e93;
-            --accent: #007aff;
-            --shadow-soft: 0 2px 12px rgba(0,0,0,0.04);
-        }
+        [data-theme="iphone"] { --bg-main: #f2f2f7; --bg-card: #ffffff; --bg-header: rgba(255, 255, 255, 0.8); --border-color: transparent; --text-main: #000000; --text-muted: #8e8e93; --accent: #007aff; --shadow-soft: 0 2px 12px rgba(0,0,0,0.04); }
 
         [data-font="default"] { --font-family: 'Plus Jakarta Sans', sans-serif; }
         [data-font="serif"] { --font-family: 'Merriweather', serif; }
@@ -78,24 +49,15 @@
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
 
         /* --- Header --- */
-        .header-container { 
-            max-width: 1050px; margin: 20px auto; padding: 12px 20px; 
-            display: flex; justify-content: space-between; align-items: center;
-            background: var(--bg-header); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border-radius: 16px; border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-soft); position: sticky; top: 15px; z-index: 50;
-        }
+        .header-container { max-width: 1050px; margin: 20px auto; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; background: var(--bg-header); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-soft); position: sticky; top: 15px; z-index: 50; }
         .header-title { display: flex; align-items: center; gap: 8px; font-size: 19px; font-weight: 800; }
         .header-title i { color: var(--accent); font-size: 26px; }
-        
         .tabs { display: flex; gap: 10px; background: var(--bg-main); padding: 4px; border-radius: 12px; border: 1px solid var(--border-color); }
         .tab-btn { padding: 6px 14px; border: none; background: transparent; color: var(--text-muted); font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: 0.2s; }
         .tab-btn.active { background: var(--bg-card); color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-
         .search-box { position: relative; width: 200px; }
         .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 16px; }
         .search-box input { width: 100%; background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 12px 8px 36px; border-radius: 10px; outline: none; font-size: 13px; font-weight: 500; }
-        
         .global-settings-btn { background: var(--bg-main); border: 1px solid var(--border-color); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--text-main); cursor: pointer; }
 
         /* Dropdowns */
@@ -106,16 +68,8 @@
         select.settings-select { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); outline: none; cursor: pointer; margin-top: 4px;}
 
         /* --- Hero Banner (Continue Reading) --- */
-        .hero-banner {
-            max-width: 1050px; margin: 20px auto 0 auto; padding: 0 20px; display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        .hero-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-main));
-            border: 1px solid var(--border-color); border-radius: 20px; padding: 20px 24px;
-            display: flex; align-items: center; justify-content: space-between; gap: 20px;
-            box-shadow: var(--shadow-soft); cursor: pointer; transition: 0.3s;
-        }
+        .hero-banner { max-width: 1050px; margin: 20px auto 0 auto; padding: 0 20px; display: none; animation: fadeIn 0.5s ease; }
+        .hero-card { background: linear-gradient(135deg, var(--bg-card), var(--bg-main)); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; box-shadow: var(--shadow-soft); cursor: pointer; transition: 0.3s; }
         .hero-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 12px 25px var(--accent-glow); }
         .hero-info { display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
         .hero-tag { font-size: 11px; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 4px; }
@@ -151,15 +105,14 @@
         .btn-close:hover { background: #e11d48; color: white; }
 
         /* Floating Bottom Nav */
-        .bottom-nav {
-            position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
-            background: var(--bg-card); padding: 8px 12px; border-radius: 20px; border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s; z-index: 1050;
-        }
+        .bottom-nav { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); background: var(--bg-card); padding: 8px 12px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 40px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s; z-index: 1050; }
         .btn-control { background: var(--bg-main); border: none; color: var(--text-main); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; border: 1px solid var(--border-color); }
         .btn-control:hover { background: var(--accent); color: white; border-color: var(--accent); box-shadow: 0 4px 10px var(--accent-glow); }
         .page-info { font-size: 13px; font-weight: 700; min-width: 70px; text-align: center; }
+
+        /* Zoom Control Bar */
+        .zoom-controls { display: flex; align-items: center; gap: 4px; background: var(--bg-main); padding: 4px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .zoom-controls .btn-control { width: 32px; height: 32px; border-radius: 8px; font-size: 16px; }
 
         /* Focus Mode (Hides UI) */
         .focus-mode .viewer-header { transform: translateY(-100%); }
@@ -175,20 +128,21 @@
         .outline-item:hover { background: var(--bg-card); color: var(--accent); font-weight: 600; }
         .outline-item.no-chapters { color: var(--text-muted); cursor: default; font-style: italic; }
 
+        .hide-mobile { display: inline-block; }
         .msg-text { text-align: center; margin-top: 80px; font-size: 16px; font-weight: 600; grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 10px; color: var(--text-muted); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
         @media (max-width: 900px) { .library-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 650px) { .library-grid { grid-template-columns: repeat(2, 1fr); } .header-container { flex-wrap: wrap; gap: 15px; } .tabs { width: 100%; justify-content: center; order: 3; } }
-        @media (max-width: 450px) { .library-grid { grid-template-columns: 1fr; } .hero-card { flex-direction: column; align-items: flex-start; text-align: left; } .hero-play-btn { align-self: flex-end; margin-top: -30px; } }
+        @media (max-width: 450px) { .library-grid { grid-template-columns: 1fr; } .hero-card { flex-direction: column; align-items: flex-start; text-align: left; } .hero-play-btn { align-self: flex-end; margin-top: -30px; } .hide-mobile { display: none; } }
     </style>
 </head>
 <body data-theme="default" data-font="default">
 
     <!-- Header -->
     <div class="header-container">
-        <div class="header-title"><i class="ph-duotone ph-books"></i> Library</div>
+        <div class="header-title"><i class="ph-duotone ph-books"></i> <span class="hide-mobile">Library</span></div>
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('all', this)">All Books</button>
             <button class="tab-btn" onclick="switchTab('fav', this)">Favorites 🎃</button>
@@ -208,7 +162,7 @@
                     <span id="reading-time-badge" style="color:var(--accent); font-size:10px;">0 mins</span>
                 </div>
 
-                <!-- 🌟 History Section Brought Back! -->
+                <!-- History Section -->
                 <div class="dropdown-header" style="margin-top: 10px;"><i class="ph-bold ph-clock-counter-clockwise"></i> Recently Read</div>
                 <div id="recent-book-container"></div>
                 
@@ -235,7 +189,7 @@
         </div>
     </div>
 
-    <!-- 🌟 Hero Banner: Jump Back In -->
+    <!-- Hero Banner -->
     <div class="hero-banner" id="hero-banner">
         <div class="hero-card" onclick="resumeLastBook()">
             <div class="hero-info">
@@ -260,7 +214,14 @@
     <div id="viewer-overlay">
         <!-- Top Header -->
         <div class="viewer-header">
-            <button class="btn-action btn-close" onclick="closeViewer()"><i class="ph-bold ph-arrow-left"></i> Library</button>
+            <button class="btn-action btn-close" onclick="closeViewer()"><i class="ph-bold ph-arrow-left"></i> <span class="hide-mobile">Library</span></button>
+            
+            <!-- 🌟 Zoom Controls -->
+            <div class="zoom-controls">
+                <button class="btn-control" onclick="changeZoom(-0.2)" title="Zoom Out"><i class="ph-bold ph-minus"></i></button>
+                <span id="zoom-level" style="font-size:12px; font-weight:700; width:45px; text-align:center;">100%</span>
+                <button class="btn-control" onclick="changeZoom(0.2)" title="Zoom In"><i class="ph-bold ph-plus"></i></button>
+            </div>
             
             <div style="display:flex; gap:10px; position:relative;">
                 <button class="global-settings-btn" onclick="toggleMenu(event, 'viewer-options-menu')">
@@ -275,7 +236,6 @@
                         <span style="display:flex; align-items:center; gap:6px;"><i class="ph-bold ph-bookmark-simple"></i> Chapters</span>
                         <i class="ph-bold ph-caret-down"></i>
                     </div>
-                    <!-- Auto Generated Chapters list -->
                     <div id="outline-container"></div>
                     
                     <div class="dropdown-header" style="margin-top: 10px;"><i class="ph-bold ph-sliders-horizontal"></i> Mode</div>
@@ -302,7 +262,7 @@
             </div>
         </div>
         
-        <!-- 🌟 Floating Bottom Nav -->
+        <!-- Floating Bottom Nav -->
         <div class="bottom-nav">
             <button class="btn-control" id="prev-page"><i class="ph-bold ph-caret-left"></i></button>
             <span class="page-info"><span id="page-num">0</span> / <span id="page-count">0</span></span>
@@ -333,9 +293,12 @@
 
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        let pdfDoc = null, pageNum = 1, autoFitScale = 1.0;
+        let pdfDoc = null, pageNum = 1;
+        let autoFitScale = 1.0; 
+        let currentScale = 1.0; 
         let readingMode = 'swipe'; 
         let isEyeCareOn = false;
+        let isAutoScrolling = false; // 🌟 BUG FIX FOR SCROLL RESET
         
         let allPdfs = [];
         let currentFileName = ""; 
@@ -345,7 +308,7 @@
         let totalReadingMinutes = parseInt(localStorage.getItem('library-read-time')) || 0;
         let readSessionStart = null;
 
-        // 🟢 1. Initialization & UI Setup
+        // 🟢 1. Initialization
         function loadPreferences() {
             const savedTheme = localStorage.getItem('app-theme') || 'default';
             const savedFont = localStorage.getItem('app-font') || 'default';
@@ -356,7 +319,7 @@
             
             document.getElementById('reading-time-badge').textContent = formatTime(totalReadingMinutes);
             checkHeroBanner();
-            updateGlobalHistory(); // 🌟 History properly updated on load
+            updateGlobalHistory();
         }
 
         function formatTime(mins) {
@@ -369,11 +332,9 @@
         function changeTheme(theme) { document.body.setAttribute('data-theme', theme); localStorage.setItem('app-theme', theme); }
         function changeFont(font) { document.body.setAttribute('data-font', font); localStorage.setItem('app-font', font); }
         
-        // 🌟 The History Function!
         function updateGlobalHistory() {
             const recentBook = localStorage.getItem('recent-book');
             const container = document.getElementById('recent-book-container');
-            
             if (recentBook) {
                 const page = localStorage.getItem(`page-${recentBook}`) || 1;
                 const displayName = recentBook.replace(/\.pdf$/i, '');
@@ -385,15 +346,12 @@
                         </span>
                     </div>
                 `;
-            } else {
-                container.innerHTML = `<div class="dropdown-item" style="font-size:12px; color:var(--text-muted); cursor:default;">No books read yet.</div>`;
-            }
+            } else { container.innerHTML = `<div class="dropdown-item" style="font-size:12px; color:var(--text-muted); cursor:default;">No books read yet.</div>`; }
         }
 
         function checkHeroBanner() {
             const recentBook = localStorage.getItem('recent-book');
             const hero = document.getElementById('hero-banner');
-            
             if (recentBook) {
                 const displayName = recentBook.replace(/\.pdf$/i, '');
                 const page = parseInt(localStorage.getItem(`page-${recentBook}`)) || 1;
@@ -405,31 +363,14 @@
                 document.getElementById('hero-status').textContent = percent === 100 ? "Completed" : `Page ${page} of ${total} (${percent}%)`;
                 document.getElementById('hero-fill').style.width = `${percent}%`;
                 hero.style.display = 'block';
-            } else {
-                hero.style.display = 'none';
-            }
+            } else { hero.style.display = 'none'; }
         }
 
-        function resumeLastBook() {
-            const recentBook = localStorage.getItem('recent-book');
-            if(recentBook) openPdf(recentBook);
-        }
-
-        function toggleMenu(event, menuId) {
-            event.stopPropagation();
-            const allMenus = document.querySelectorAll('.dropdown');
-            allMenus.forEach(m => { if(m.id !== menuId) m.style.display = 'none'; });
-            const target = document.getElementById(menuId);
-            target.style.display = target.style.display === 'block' ? 'none' : 'block';
-        }
+        function resumeLastBook() { const recentBook = localStorage.getItem('recent-book'); if(recentBook) openPdf(recentBook); }
+        function toggleMenu(event, menuId) { event.stopPropagation(); document.querySelectorAll('.dropdown').forEach(m => { if(m.id !== menuId) m.style.display = 'none'; }); const target = document.getElementById(menuId); target.style.display = target.style.display === 'block' ? 'none' : 'block'; }
         window.onclick = () => { document.querySelectorAll('.dropdown').forEach(m => m.style.display = 'none'); };
 
-        function toggleEyeCare(event) {
-            if(event) event.stopPropagation();
-            isEyeCareOn = !isEyeCareOn;
-            document.body.classList.toggle('sepia-mode', isEyeCareOn);
-            document.getElementById('check-eyecare').style.display = isEyeCareOn ? 'inline-block' : 'none';
-        }
+        function toggleEyeCare(event) { if(event) event.stopPropagation(); isEyeCareOn = !isEyeCareOn; document.body.classList.toggle('sepia-mode', isEyeCareOn); document.getElementById('check-eyecare').style.display = isEyeCareOn ? 'inline-block' : 'none'; }
 
         // 🟢 2. Fetch Books
         async function loadLibrary() {
@@ -445,9 +386,7 @@
 
         // 🟢 3. Render Books Grid
         function renderGrid(searchQuery = '') {
-            const grid = document.getElementById('library-grid');
-            grid.innerHTML = ''; 
-
+            const grid = document.getElementById('library-grid'); grid.innerHTML = ''; 
             let displayList = allPdfs.filter(file => file.name.toLowerCase().includes(searchQuery.toLowerCase()));
             if (currentTab === 'fav') displayList = displayList.filter(file => favorites.includes(file.name));
 
@@ -478,38 +417,18 @@
             });
         }
 
-        function toggleFav(event, fileName) {
-            event.stopPropagation();
-            if (favorites.includes(fileName)) favorites = favorites.filter(f => f !== fileName);
-            else favorites.push(fileName);
-            localStorage.setItem('library-favs', JSON.stringify(favorites));
-            if(currentTab === 'fav') renderGrid(document.getElementById('searchInput').value);
-            else { event.currentTarget.classList.toggle('active'); }
-        }
-
+        function toggleFav(event, fileName) { event.stopPropagation(); if (favorites.includes(fileName)) favorites = favorites.filter(f => f !== fileName); else favorites.push(fileName); localStorage.setItem('library-favs', JSON.stringify(favorites)); if(currentTab === 'fav') renderGrid(document.getElementById('searchInput').value); else { event.currentTarget.classList.toggle('active'); } }
         function switchTab(tab, element) { currentTab = tab; document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); element.classList.add('active'); renderGrid(document.getElementById('searchInput').value); }
         function filterPDFs() { renderGrid(document.getElementById('searchInput').value); }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) { const card = entry.target; generateCover(card.dataset.url, card.dataset.cid); observer.unobserve(card); }
-            });
-        }, { rootMargin: "100px" });
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { const card = entry.target; generateCover(card.dataset.url, card.dataset.cid); observer.unobserve(card); } }); }, { rootMargin: "100px" });
+        async function generateCover(url, canvasId) { try { const pdf = await pdfjsLib.getDocument(url).promise; const page = await pdf.getPage(1); const canvas = document.getElementById(canvasId); if(!canvas) return; const viewport = page.getViewport({ scale: 0.5 }); canvas.width = viewport.width; canvas.height = viewport.height; await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise; canvas.classList.add('loaded'); } catch(e) {} }
 
-        async function generateCover(url, canvasId) {
-            try {
-                const pdf = await pdfjsLib.getDocument(url).promise;
-                const page = await pdf.getPage(1); const canvas = document.getElementById(canvasId); if(!canvas) return;
-                const viewport = page.getViewport({ scale: 0.5 }); canvas.width = viewport.width; canvas.height = viewport.height;
-                await page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise; canvas.classList.add('loaded');
-            } catch(e) {}
-        }
-
-        // 🟢 4. Open PDF & Chapters (Outline)
+        // 🟢 4. Open PDF & Setup
         function openPdf(fileName) {
             currentFileName = fileName;
             localStorage.setItem('recent-book', fileName);
-            updateGlobalHistory(); // 🌟 Update History when a book is opened
+            updateGlobalHistory(); 
             readSessionStart = Date.now(); 
             
             document.getElementById('viewer-overlay').style.display = 'flex';
@@ -517,6 +436,7 @@
 
             const savedPage = localStorage.getItem(`page-${fileName}`);
             pageNum = savedPage ? parseInt(savedPage) : 1;
+            
             const fileUrl = `https://${GITHUB_USERNAME}.github.io/${GITHUB_REPO}/${FOLDER_NAME}/${encodeURIComponent(fileName)}`;
             
             pdfjsLib.getDocument(fileUrl).promise.then(async pdfDoc_ => {
@@ -524,21 +444,19 @@
                 document.getElementById('page-count').textContent = pdfDoc.numPages;
                 localStorage.setItem(`total-${fileName}`, pdfDoc.numPages);
 
-                // Auto-fit 
                 const firstPage = await pdfDoc.getPage(1);
                 const unscaled = firstPage.getViewport({ scale: 1.0 });
                 autoFitScale = (document.getElementById('canvas-container').clientWidth - 20) / unscaled.width;
                 if(autoFitScale > 1.6) autoFitScale = 1.6; 
+                currentScale = autoFitScale; // 🌟 Init Scale
+                updateZoomText();
 
-                // Extract Chapters
                 pdfDoc.getOutline().then(outline => buildOutline(outline));
-
                 renderCurrentMode();
             }).catch(err => { alert("Error loading Book."); closeViewer(); });
         }
 
         function closeViewer() {
-            // Save Reading Time
             if(readSessionStart) {
                 const sessionMins = Math.floor((Date.now() - readSessionStart) / 60000);
                 totalReadingMinutes += sessionMins;
@@ -547,45 +465,36 @@
             }
             document.getElementById('viewer-overlay').style.display = 'none';
             document.body.style.overflow = 'auto'; 
-            document.body.classList.remove('focus-mode'); // reset focus mode
+            document.body.classList.remove('focus-mode');
             pdfDoc = null; 
             checkHeroBanner();
             renderGrid(document.getElementById('searchInput').value); 
         }
 
-        // Build Table of Contents
+        // Chapters
         function buildOutline(outline) {
-            const container = document.getElementById('outline-container');
-            container.innerHTML = '';
-            
-            if (!outline || outline.length === 0) {
-                container.innerHTML = '<div class="outline-item no-chapters">No chapters found in this book.</div>';
-                return;
-            }
-
+            const container = document.getElementById('outline-container'); container.innerHTML = '';
+            if (!outline || outline.length === 0) { container.innerHTML = '<div class="outline-item no-chapters">No chapters found.</div>'; return; }
             outline.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'outline-item';
-                div.textContent = item.title;
-                div.onclick = (e) => {
-                    e.stopPropagation();
-                    if(typeof item.dest === 'string') {
-                        pdfDoc.getDestination(item.dest).then(dest => goToDest(dest));
-                    } else { goToDest(item.dest); }
-                };
+                const div = document.createElement('div'); div.className = 'outline-item'; div.textContent = item.title;
+                div.onclick = (e) => { e.stopPropagation(); if(typeof item.dest === 'string') { pdfDoc.getDestination(item.dest).then(dest => goToDest(dest)); } else { goToDest(item.dest); } };
                 container.appendChild(div);
             });
         }
-        
         function toggleOutline(e) { e.stopPropagation(); const c = document.getElementById('outline-container'); c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
+        function goToDest(dest) { if(!dest) return; pdfDoc.getPageIndex(dest[0]).then(idx => { pageNum = idx + 1; renderCurrentMode(); document.getElementById('viewer-options-menu').style.display = 'none'; }); }
 
-        function goToDest(dest) {
-            if(!dest) return;
-            pdfDoc.getPageIndex(dest[0]).then(idx => {
-                pageNum = idx + 1;
-                renderCurrentMode();
-                document.getElementById('viewer-options-menu').style.display = 'none';
-            });
+        // 🌟 Zoom Functionality
+        function changeZoom(step) {
+            currentScale += step;
+            if (currentScale < 0.5) currentScale = 0.5;
+            if (currentScale > 3.0) currentScale = 3.0;
+            updateZoomText();
+            renderCurrentMode();
+        }
+        function updateZoomText() {
+            const percent = Math.round((currentScale / autoFitScale) * 100);
+            document.getElementById('zoom-level').textContent = `${percent}%`;
         }
 
         // 🟢 5. Render Logic
@@ -606,7 +515,7 @@
         async function renderSinglePage(num) {
             const container = document.getElementById('canvas-container'); container.innerHTML = ''; 
             const page = await pdfDoc.getPage(num);
-            const viewport = page.getViewport({ scale: autoFitScale });
+            const viewport = page.getViewport({ scale: currentScale }); // 🌟 Uses currentScale
             const outputScale = window.devicePixelRatio || 1;
             const canvas = document.createElement('canvas'); canvas.className = 'pdf-page-canvas';
             
@@ -618,13 +527,16 @@
 
             document.getElementById('page-num').textContent = num;
             localStorage.setItem(`page-${currentFileName}`, num);
-            updateGlobalHistory(); // 🌟 Update History on Page Change
         }
 
         async function renderAllPagesContinuous() {
-            const container = document.getElementById('canvas-container'); container.innerHTML = ''; 
+            const container = document.getElementById('canvas-container'); 
+            container.innerHTML = ''; 
+            isAutoScrolling = true; // 🌟 Lock saving history to prevent resetting
+
             for(let i = 1; i <= pdfDoc.numPages; i++) {
-                const page = await pdfDoc.getPage(i); const viewport = page.getViewport({ scale: autoFitScale });
+                const page = await pdfDoc.getPage(i); 
+                const viewport = page.getViewport({ scale: currentScale }); // 🌟 Uses currentScale
                 const outputScale = window.devicePixelRatio || 1;
                 const canvas = document.createElement('canvas'); canvas.className = 'pdf-page-canvas'; canvas.id = `scroll-page-${i}`;
                 canvas.width = Math.floor(viewport.width * outputScale); canvas.height = Math.floor(viewport.height * outputScale);
@@ -632,20 +544,26 @@
                 container.appendChild(canvas);
                 page.render({ canvasContext: canvas.getContext('2d'), transform: outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null, viewport: viewport });
             }
-            setTimeout(() => { const target = document.getElementById(`scroll-page-${pageNum}`); if(target) target.scrollIntoView({ behavior: 'smooth' }); }, 300);
+
+            // 🌟 Smooth scroll to saved page, then unlock saving
+            setTimeout(() => { 
+                const target = document.getElementById(`scroll-page-${pageNum}`); 
+                if(target) target.scrollIntoView({ behavior: 'auto' }); 
+                setTimeout(() => { isAutoScrolling = false; }, 500); 
+            }, 300);
         }
 
-        // 🟢 6. Interactions: Focus Mode (Tap) & Swipe & Scroll
+        // 🟢 6. Interactions
         const container = document.getElementById('canvas-container');
         
         container.addEventListener('click', (e) => {
-            if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I') {
+            if(e.target.tagName !== 'BUTTON' && e.target.tagName !== 'I' && !e.target.closest('.zoom-controls')) {
                 document.body.classList.toggle('focus-mode');
             }
         });
 
         container.addEventListener('scroll', () => {
-            if(readingMode !== 'scroll' || !pdfDoc) return;
+            if(readingMode !== 'scroll' || !pdfDoc || isAutoScrolling) return; // 🌟 Bug fixed here!
             const canvases = container.querySelectorAll('.pdf-page-canvas');
             canvases.forEach((c, index) => {
                 const rect = c.getBoundingClientRect();
@@ -653,7 +571,6 @@
                     const currentPg = index + 1;
                     document.getElementById('page-num').textContent = currentPg;
                     localStorage.setItem(`page-${currentFileName}`, currentPg);
-                    updateGlobalHistory(); // 🌟 Update History on scroll
                 }
             });
         });
